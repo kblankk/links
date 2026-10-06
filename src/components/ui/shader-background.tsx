@@ -124,16 +124,17 @@ export function ShaderBackground({ className }: { className?: string }) {
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     };
 
+    // Size from the canvas box (100lvh), not innerHeight: the mobile URL bar showing/hiding
+    // on scroll changes innerHeight, which would clear the buffer and re-centre the shader.
     const resize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      if (!w || !h || (w === canvas.width && h === canvas.height)) return;
       canvas.width = w;
       canvas.height = h;
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
       gl.viewport(0, 0, w, h);
       gl.uniform2f(uResolution, w, h);
-      if (still) draw();
+      draw();
     };
 
     const frame = (now: number) => {
@@ -158,11 +159,12 @@ export function ShaderBackground({ className }: { className?: string }) {
       raf = requestAnimationFrame(frame);
     }
 
-    window.addEventListener("resize", resize);
+    const observer = new ResizeObserver(resize);
+    observer.observe(canvas);
     document.addEventListener("visibilitychange", onVisibility);
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("resize", resize);
+      observer.disconnect();
       document.removeEventListener("visibilitychange", onVisibility);
       gl.deleteBuffer(buffer);
       gl.deleteProgram(program);
@@ -172,8 +174,11 @@ export function ShaderBackground({ className }: { className?: string }) {
   }, []);
 
   return (
-    <div aria-hidden="true" className={cn("pointer-events-none fixed inset-0 -z-10 bg-black", className)}>
-      <canvas ref={canvasRef} className="block" />
+    <div
+      aria-hidden="true"
+      className={cn("pointer-events-none fixed top-0 left-0 -z-10 h-lvh w-full overflow-hidden bg-black", className)}
+    >
+      <canvas ref={canvasRef} className="block size-full" />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { AnimatePresence, LazyMotion, MotionConfig, domAnimation, m, type Variants } from "motion/react";
 import { links, profile, stack } from "@/data/profile";
-import { Background } from "@/components/background";
+import { ShaderBackground } from "@/components/ui/shader-background";
 import { TopBar } from "@/components/top-bar";
 import { ProfileHeader } from "@/components/profile-header";
 import { LinkCard } from "@/components/link-card";
@@ -9,7 +9,6 @@ import { ToastProvider } from "@/components/toast";
 import { Marquee } from "@/components/ui/marquee";
 import { BrandIcon } from "@/components/ui/brand-icon";
 import { NumberTicker } from "@/components/ui/number-ticker";
-import { useTheme } from "@/hooks/use-theme";
 import { useGitHubStats } from "@/hooks/use-github-stats";
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -48,7 +47,6 @@ function SectionLabel({ children }: { children: ReactNode }) {
 }
 
 export default function App() {
-  const { dark, setTheme } = useTheme();
   const stats = useGitHubStats(profile.username);
 
   const githubExtra = (
@@ -66,10 +64,10 @@ export default function App() {
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
         <ToastProvider>
-          <Background dark={dark} />
+          <ShaderBackground />
 
           <main className="relative mx-auto flex min-h-dvh w-full max-w-[30rem] flex-col px-5 pt-5 pb-8 sm:pt-8">
-            <TopBar dark={dark} onThemeChange={setTheme} />
+            <TopBar />
             <ProfileHeader />
 
             <section aria-labelledby="links-title" className="mt-11">

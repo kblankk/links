@@ -16,7 +16,7 @@ function Avatar() {
       whileHover={{ scale: 1.04 }}
       className="group relative size-28 sm:size-32"
     >
-      <div className="absolute -inset-8 rounded-full bg-brand/25 blur-3xl transition-opacity duration-500 group-hover:opacity-100 dark:bg-brand/30" />
+      <div className="absolute -inset-8 rounded-full bg-brand/25 blur-3xl transition-opacity duration-500" />
       {/* Rotating beam ring */}
       <div className="absolute -inset-[3px] overflow-hidden rounded-full">
         <div className="absolute inset-[-50%] animate-spin-slow bg-[conic-gradient(from_0deg,transparent_0deg,transparent_200deg,#0096ff_280deg,#00d4ff_330deg,transparent_360deg)]" />

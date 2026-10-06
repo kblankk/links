@@ -93,22 +93,8 @@ export function TopBar({ dark, onThemeChange }: { dark: boolean; onThemeChange: 
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-      className="flex items-center justify-between"
+      className="flex items-center justify-end"
     >
-      <a
-        href="https://github.com/kblankk"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex items-center gap-2.5 rounded-full py-1 pr-2 font-mono text-[13px] text-muted transition-colors hover:text-foreground"
-      >
-        <span className="relative grid size-7 place-items-center rounded-lg bg-linear-to-br from-brand-2 to-brand font-sans text-[13px] font-bold text-white shadow-[0_6px_20px_-6px_rgb(0_150_255/0.8)] transition-transform duration-300 group-hover:rotate-[-8deg] group-hover:scale-105">
-          K
-        </span>
-        <span>
-          <span className="text-brand">~/</span>
-          {profile.username}
-        </span>
-      </a>
       <div className="flex items-center gap-2">
         <ShareButton />
         <ThemeToggle dark={dark} onChange={onThemeChange} />
